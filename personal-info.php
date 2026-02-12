@@ -9,7 +9,7 @@
 
 <h2>Curriculum Vitae</h2>
 
-<form method="POST" action="result.php" enctype="multipart/form-data">
+<form method="POST" action="experience.php" enctype="multipart/form-data">
 <h2>Personal Information</h2>
     <label class="upload-box">
         <input type="file" accept="image/*" hidden>
@@ -19,11 +19,11 @@
     </div>
     </label>
     <label>First Name:</label><br>
-        <input type="text" name="fname" placeholder="ex.Joshua" required><br> 
+        <input type="text" name="first_name" placeholder="ex.Joshua" required><br> 
     <label>Last Name</label><br> 
-        <input type="text" name="lname" placeholder="ex. Rosario" required><br> 
+        <input type="text" name="last_name" placeholder="ex. Rosario" required><br> 
     <label>Extension Name (if applicable):</label>
-        <input type="text" name="ename" placeholder="e.g. Jr., III "><br>  
+        <input type="text" name="extension_name" placeholder="e.g. Jr., III "><br>  
 <h2>Contact Information</h2>
     <label>Phone Number:</label><br>
         <input type="tel" name="phone" required><br> 

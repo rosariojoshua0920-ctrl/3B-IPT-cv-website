@@ -81,13 +81,39 @@
 include 'db.php';
 
 // Personal Info
-$fname = $_POST['fname'];
-$lname = $_POST['lname'];
-$ename = $_POST['ename'];
+$fname = $_POST['first_name'];
+$lname = $_POST['last_name'];   
+$ename = $_POST['extension_name'];
 $phone = $_POST['phone'];
 $email = $_POST['email'];
 $address = $_POST['address'];
 $about = $_POST['about'];
+
+
+
+// Education
+$degree = $_POST['degree'];
+$school = $_POST['school'];
+$school_start_year = $_POST['school_start_year'];
+$school_end_year = $_POST['school_end_year'];
+
+// Experience
+$company = $_POST['company'];
+$position = $_POST['position'];
+$work_start_year = $_POST['work_start_year'];
+$work_end_year = $_POST['work_end_year'];
+
+// Skills
+$skill1 = $_POST['skill1'];
+
+// References
+$reference = $_POST['reference'];
+
+
+
+
+
+
 
 // Photo upload handling
 $photo = '';
