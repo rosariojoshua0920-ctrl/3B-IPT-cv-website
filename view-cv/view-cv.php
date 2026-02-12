@@ -6,6 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>View your cv</h1>
+    <h2>View your cv</h2>
+    <p>Here you can view your cv</p>
+    
+    
 </body>
 </html>

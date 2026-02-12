@@ -70,7 +70,7 @@
     <div>
         <button onclick="window.print()">Print</button>
         <button onclick="downloadPDF()">Download</button>
-        <button onclick="window.location.href='../layout-main-page/nav-bar-main-page.php'">Back to Main Page</button>
+        <button onclick="window.location.href='../layout-main-page/nav-barmain-page.php'">Back to Main Page</button>
     </div>
 
 </div>

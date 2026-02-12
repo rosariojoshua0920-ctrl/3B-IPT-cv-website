@@ -20,24 +20,25 @@ if ($current_page === 'experience.php') {
     
       
             <div>Curriculum Vitae</div>
-      
-                    <button onclick="loadContent('../cv-form/personal-info.php')" class="step-btn <?php echo $active_step === 'personal' ? 'active' : ''; ?>" data-step="personal">
+                    <nav>
+                    <button onclick="loadContent('../cv-form/personal-info.php')"  required>
                         <div>👤</div>
                         <p>Personal</p>
                     </button>
                   
-                    <button onclick="loadContent('../cv-form/experience.php')" class="step-btn <?php echo $active_step === 'experience' ? 'active' : ''; ?>" data-step="experience">
+                    <button onclick="loadContent('../cv-form/experience.php')" required>
                         <div>💼</div>
                         <p>Experiences</p>
                     </button>
                   
-                    <button onclick="loadContent('../cv-form/result.php')" class="step-btn <?php echo $active_step === 'template' ? 'active' : ''; ?>" data-step="template">
+                    <button onclick="loadContent('../cv-form/result.php')" >
                         <div>✓</div>
                         <p>Template</p>
                     </button>
-
+                    </nav>
                     <div id="content"></div>
-
+                    <button onclick="loadNext()">Next</button> 
+                    <button onclick="window.location.href='../layout-main-page/nav-bar-main.php'">Back to Main Page</button>
             <script src="nav-bar-form.js"></script>
                 
 </body>
