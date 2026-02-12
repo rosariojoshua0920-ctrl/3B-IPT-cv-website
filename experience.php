@@ -7,6 +7,8 @@
 </head>
 <body>
     <h2>Education</h2>
+
+    <form action="result.php" method="post">
 <label>Degree:</label><br>
 <input type="text" name="degree"><br> 
 <label>School:</label><br>
@@ -35,9 +37,10 @@
 
 <h2>References</h2>
 <label>Reference:</label><br>
-<input type="text" name="reference1" required><br> 
+<input type="text" name="reference" required><br> 
 <button type="button" onclick="addReference()">Add Reference</button>
 
 <button type="submit">Next</button>
+</form>
 </body>
 </html>
