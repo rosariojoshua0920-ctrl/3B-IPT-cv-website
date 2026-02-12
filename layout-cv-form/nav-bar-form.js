@@ -9,6 +9,6 @@ function loadContent(url) {
         });
 }
 
-        window.onload = function() {
-            loadContent('../cv-from/personal.php');
-        };
+window.onload = function() {
+    loadContent('../cv-form/personal-info.php');
+};

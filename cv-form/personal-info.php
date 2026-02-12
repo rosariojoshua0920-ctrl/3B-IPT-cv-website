@@ -9,7 +9,7 @@
 
 <h2>Curriculum Vitae</h2>
 
-<form method="POST" action="experience.php" enctype="multipart/form-data">
+<form method="POST" action="../cv-form/experience.php" enctype="multipart/form-data">
 <h2>Personal Information</h2>
     <label class="upload-box">
         <input type="file" accept="image/*" hidden>
@@ -34,7 +34,7 @@
 <h2>About Me</h2>
     <textarea name="about" rows="5" cols="40" required></textarea>
     <!--<button type="submit">Next</button>-->
-     <button type="submit">Submit</button>
+     <button type="submit">Next</button>
 </form>
 </body>
 </html>

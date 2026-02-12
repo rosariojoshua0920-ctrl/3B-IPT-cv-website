@@ -8,7 +8,7 @@
 <body>
 <h2>Education</h2>
 
-    <form action="result.php" method="post">
+    <form action="../layout-cv-form/nav-bar-form.php" method="post">
         <label>Degree:</label><br>
             <input type="text" name="degree"><br> 
         <label>School:</label><br>
@@ -36,7 +36,7 @@
         <label>Reference:</label><br>
             <input type="text" name="reference" required><br> 
                 <button type="button" onclick="addReference()">Add Reference</button>
-                    <button type="submit">Next</button>
+                    <button type="submit">Submit</button>
 </form>
 </body>
 </html>
