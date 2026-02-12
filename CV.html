@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Vitae Builder</title>
+    <link rel="stylesheet" href="CV.css">
+    <link rel="stylesheet" href="CV.js">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Curriculum Vitae</h1>
+        </div>
+
+        <div class="pages">
+            <!-- Page 1: Personal Information -->
+            <div class="page active" id="page1">
+                <h2>Personal Information</h2>
+                
+                <div class="photo-upload">
+                    <div class="photo-circle" id="photoCircle">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13h3v-3h2v3h3v2H9v3H7v-3H4v-2zm8-1c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+                        </svg>
+                        <span>Add Photo</span>
+                        <img id="photoPreview" style="display: none;">
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*">
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" placeholder="Enter first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" placeholder="Enter last name">
+                    </div>
+                    <div class="form-group">
+                        <label for="extensionName">Extension Name:</label>
+                        <input type="text" id="extensionName" placeholder="e.g., Jr., Sr., III (if applicable)">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone number:</label>
+                        <input type="tel" id="phone" placeholder="Enter phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" id="address" placeholder="Enter address">
+                    </div>
+                    <div class="form-group full">
+                        <label for="about">About Me:</label>
+                        <textarea id="about" placeholder="Write a brief description about yourself"></textarea>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    <div></div>
+                    <button class="btn btn-primary" id="nextBtn1">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 2: Education & Experience -->
+            <div class="page" id="page2">
+                <h2>Education</h2>
+                <div id="educationEntries"></div>
+                <button class="add-btn" id="addEducationBtn">+ Add Education</button>
+
+                <h2 style="margin-top: 30px;">Work Experiences</h2>
+                <div id="experienceEntries"></div>
+                <button class="add-btn" id="addExperienceBtn">+ Add Experience</button>
+
+                <h2 style="margin-top: 30px;">Skills</h2>
+                <div class="form-group">
+                    <textarea id="skills" placeholder="Enter your skills (e.g., JavaScript, Python, Project Management)" style="min-height: 80px;"></textarea>
+                </div>
+
+                <h2 style="margin-top: 30px;">References</h2>
+                <div class="form-group">
+                    <textarea id="references" placeholder="Enter references"></textarea>
+                </div>
+
+                <div class="navigation">
+                    <button class="btn" id="prevBtn2">Previous</button>
+                    <button class="btn btn-primary" id="nextBtn2">Next</button>
+                </div>
+            </div>
+
+            <!-- Page 3: CV Preview -->
+            <div class="page" id="page3">
+                <div class="cv-preview" id="cvPreview">
+                    <!-- CV content will be generated here -->
+                </div>
+
+                <div class="preview-actions">
+                    <button class="btn" id="prevBtn3">Previous</button>
+                    <button class="btn btn-primary" id="downloadBtn">Download</button>
+                    <button class="btn" id="printBtn">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="CV.js"></script>
+</body>
+</html>
