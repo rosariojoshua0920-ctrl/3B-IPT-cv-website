@@ -9,7 +9,9 @@
 </head>
 <body>
 
- <form>
+
+ 
+     <form method="POST" action="../cv-form/result.php" ></form>
     <div class="page-wrapper">
         <div class="card">
 

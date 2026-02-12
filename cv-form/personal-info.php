@@ -31,6 +31,7 @@
                 <input type="text" id="address" name="address" required><br>
         <h2>About Me</h2>
             <textarea id="about" name="about" rows="5" cols="40" required></textarea>
+            <button type="submit">Next</button>
 </form>
 </body>
 </html>

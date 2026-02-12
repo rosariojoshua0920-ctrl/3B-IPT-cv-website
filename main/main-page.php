@@ -8,7 +8,7 @@
 <body>
     <h2>Welcome to the CV Generator</h2>
     <p>Click the button below to start creating your CV.</p>
-    <a href="../layout-cv-form/nav-bar-form.php"><button>Start creating your CV</button></a>
+    <a href="../cv-form/personal-info.php"><button>Start creating your CV</button></a>
 </body>
 </html>
 
