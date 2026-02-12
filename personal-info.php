@@ -31,8 +31,6 @@
         <input type="email" name="email" placeholder="ex@example.com" required><br> 
     <label>Address:</label><br> 
         <input type="text" name="address" required><br>
-
-
 <h2>About Me</h2>
     <textarea name="about" rows="5" cols="40" required></textarea>
     <!--<button type="submit">Next</button>-->
