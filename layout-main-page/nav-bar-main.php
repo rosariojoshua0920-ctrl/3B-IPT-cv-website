@@ -7,12 +7,22 @@
     <link rel="stylesheet" href="nav-bar-main.css">
 </head>
 <body>
-    <h1>CV Generator</h1>
-    <nav>
-        <button onclick="loadContent('../main/main-page.php')">Main Page</button>
-        <button onclick="loadContent('../view-cv/view-cv.php')">View CV</button>
-    </nav>
-    <div id="content"></div>
+    <header class="site-header">
+        <div class="brand">CV Generator</div>
+        <nav class="site-nav">
+            <button class="nav-btn" onclick="loadContent('../main/main-page.php')" aria-label="Main Page">
+                <span>Main Page</span>
+            </button>
+            <button class="nav-btn" onclick="loadContent('../view-cv/view-cv.php')" aria-label="View CV">
+                <span>View CV</span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="content" class="content-area">
+        <!-- content will be loaded here -->
+    </main>
+
     <script src="nav-bar-main.js"></script>
 </body>
 </html>
