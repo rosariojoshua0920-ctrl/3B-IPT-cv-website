@@ -8,11 +8,13 @@
 <body>
     <h2>View your cv</h2>
     <p>Here you can view your cv</p>
+    <input type="search" placeholder="Search CVs...">   
+    <button>Search</button>
     <p></p>
     <button>View</button>
     <button>Download</button>
     <button>Print</button>
-    <button>Update</button>
+    <button>Edit</button>
     <button>Delete</button>
     
 </body>

@@ -21,22 +21,22 @@
         <div class="form-grid">
             <div class="form-group">
                 <label>Degree:</label>
-                <input type="text" name="degree">
+                <input type="text" name="degree" required>
             </div>
 
     <div class="form-group">
         <label>School:</label>
-        <input type="text" name="school">
+        <input type="text" name="school" required>
             </div>
 
     <div class="form-group">
         <label>Start Year:</label>
-        <input type="text" name="school_start_year" placeholder="YYYY">
+        <input type="text" name="school_start_year" placeholder="YYYY" required>
             </div>
 
     <div class="form-group">
         <label>End Year:</label>
-        <input type="text" name="school_end_year" placeholder="YYYY">
+        <input type="text" name="school_end_year" placeholder="YYYY" required>
             </div>
         </div>
 
@@ -52,19 +52,19 @@
         <div class="form-grid">
             <div class="form-group">
                 <label>Company name:</label>
-                <input type="text" name="company">
+                <input type="text" name="company" required>
             </div>
             <div class="form-group">
                 <label>Position:</label>
-                <input type="text" name="position">
+                <input type="text" name="position" required>
             </div>
             <div class="form-group">
                 <label>Start Year:</label>
-                <input type="text" name="work_start_year" placeholder="YYYY">
+                <input type="text" name="work_start_year" placeholder="YYYY" required>
             </div>
             <div class="form-group">
                 <label>End Year:</label>
-                <input type="text" name="work_end_year" placeholder="YYYY">
+                <input type="text" name="work_end_year" placeholder="YYYY" required>
             </div>
         </div>
         <div class="btn-center">
@@ -79,7 +79,7 @@
         <div class="form-grid">
             <div class="form-group">
                 <label>Skill:</label>
-                <input type="text" name="skill">
+                <input type="text" name="skill" required>
             </div>
         </div>
         <div class="btn-center">
@@ -94,7 +94,7 @@
         <div class="form-grid">
             <div class="form-group">
                 <label>Reference:</label>
-                <input type="text" name="reference">
+                <input type="text" name="reference" required>
             </div>
         </div>
         <div class="btn-center">
