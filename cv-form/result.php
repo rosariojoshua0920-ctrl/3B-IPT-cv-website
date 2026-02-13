@@ -8,6 +8,15 @@ if (!isset($_SESSION['personal_id'])) {
 
 $personal_id = $_SESSION['personal_id'];
 
+// Check if this is an edit - if so, delete old records first
+$isEdit = isset($_POST['is_edit']) && $_POST['is_edit'] == '1';
+if ($isEdit) {
+    mysqli_query($conn, "DELETE FROM education WHERE personal_info_id = $personal_id");
+    mysqli_query($conn, "DELETE FROM work_experience WHERE personal_info_id = $personal_id");
+    mysqli_query($conn, "DELETE FROM skills WHERE personal_info_id = $personal_id");
+    mysqli_query($conn, "DELETE FROM reference_list WHERE personal_info_id = $personal_id");
+}
+
 /* =========================
    INSERT EDUCATION
 ========================= */

@@ -347,6 +347,11 @@ function validateAndNext() {
     const existingHiddenInputs = form.querySelectorAll('input[type="hidden"]');
     existingHiddenInputs.forEach(input => input.remove());
     
+    // Add is_edit flag if this is an edit
+    if (typeof isEdit !== 'undefined' && isEdit) {
+        appendHiddenInput(form, 'is_edit', '1');
+    }
+    
     // Add education data
     educationList.forEach((edu, index) => {
         appendHiddenInput(form, `education[${index}][degree]`, edu.degree);

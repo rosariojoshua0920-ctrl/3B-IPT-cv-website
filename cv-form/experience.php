@@ -2,30 +2,57 @@
 session_start();
 include "db.php";
 
-/* Upload Photo */
-$photoName = $_FILES['photo']['name'];
-$tempName = $_FILES['photo']['tmp_name'];
-$folder = "uploads/" . $photoName;
-move_uploaded_file($tempName, $folder);
+$isEdit = isset($_SESSION['personal_id']);
+$personal_id = $_SESSION['personal_id'] ?? null;
 
-/* Insert personal info */
-$sql = "INSERT INTO personal_info 
-(photo_path, first_name, last_name, extension_name, phone, email, address, about)
-VALUES 
-('$folder','{$_POST['first_name']}','{$_POST['last_name']}',
-'{$_POST['extension_name']}','{$_POST['phone']}',
-'{$_POST['email']}','{$_POST['address']}','{$_POST['about']}')";
+// Handle file upload
+if ($_FILES['photo']['name']) {
+    $photoName = $_FILES['photo']['name'];
+    $tempName = $_FILES['photo']['tmp_name'];
+    $folder = "uploads/" . $photoName;
+    move_uploaded_file($tempName, $folder);
+    $_SESSION['photo'] = $folder;
+} else if ($isEdit) {
+    // Use existing photo if not uploading new one
+    $result = mysqli_query($conn, "SELECT photo_path FROM personal_info WHERE id = $personal_id");
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['photo'] = $row['photo_path'];
+}
+
+/* Insert or Update personal info */
+if ($isEdit) {
+    // Update existing
+    $sql = "UPDATE personal_info SET 
+    photo_path='{$_SESSION['photo']}',
+    first_name='{$_POST['first_name']}',
+    last_name='{$_POST['last_name']}',
+    extension_name='{$_POST['extension_name']}',
+    phone='{$_POST['phone']}',
+    email='{$_POST['email']}',
+    address='{$_POST['address']}',
+    about='{$_POST['about']}'
+    WHERE id = $personal_id";
+} else {
+    // Insert new
+    $sql = "INSERT INTO personal_info 
+    (photo_path, first_name, last_name, extension_name, phone, email, address, about)
+    VALUES 
+    ('{$_SESSION['photo']}','{$_POST['first_name']}','{$_POST['last_name']}',
+    '{$_POST['extension_name']}','{$_POST['phone']}',
+    '{$_POST['email']}','{$_POST['address']}','{$_POST['about']}')";
+}
 
 if (!mysqli_query($conn, $sql)) {
     die("Error: " . mysqli_error($conn));
 }
 
-/* Get inserted ID */
-$personal_id = mysqli_insert_id($conn);
+/* Get/Set personal ID */
+if (!$isEdit) {
+    $personal_id = mysqli_insert_id($conn);
+    $_SESSION['personal_id'] = $personal_id;
+}
 
 /* Save to session */
-$_SESSION['personal_id'] = $personal_id;
-$_SESSION['photo'] = $folder;
 $_SESSION['first_name'] = $_POST['first_name'];
 $_SESSION['last_name'] = $_POST['last_name'];
 $_SESSION['extension_name'] = $_POST['extension_name'];
@@ -33,6 +60,34 @@ $_SESSION['phone'] = $_POST['phone'];
 $_SESSION['email'] = $_POST['email'];
 $_SESSION['address'] = $_POST['address'];
 $_SESSION['about'] = $_POST['about'];
+
+// Fetch existing education and experience if editing
+$education_list = array();
+$experience_list = array();
+$skills_list = array();
+$reference_list = array();
+
+if ($isEdit) {
+    $edu_result = mysqli_query($conn, "SELECT * FROM education WHERE personal_info_id = $personal_id");
+    while ($row = mysqli_fetch_assoc($edu_result)) {
+        $education_list[] = $row;
+    }
+    
+    $exp_result = mysqli_query($conn, "SELECT * FROM work_experience WHERE personal_info_id = $personal_id");
+    while ($row = mysqli_fetch_assoc($exp_result)) {
+        $experience_list[] = $row;
+    }
+    
+    $skill_result = mysqli_query($conn, "SELECT * FROM skills WHERE personal_info_id = $personal_id");
+    while ($row = mysqli_fetch_assoc($skill_result)) {
+        $skills_list[] = $row['skill_name'];
+    }
+    
+    $ref_result = mysqli_query($conn, "SELECT * FROM reference_list WHERE personal_info_id = $personal_id");
+    while ($row = mysqli_fetch_assoc($ref_result)) {
+        $reference_list[] = $row['reference_name'];
+    }
+}
 
 ?>
 
@@ -147,6 +202,49 @@ $_SESSION['about'] = $_POST['about'];
             </div>
     </form>
     <script src="experience.js"></script>
+    <script>
+        // Set edit mode flag
+        const isEdit = <?php echo $isEdit ? 'true' : 'false'; ?>;
+        
+        // Pre-populate forms if editing
+        <?php if ($isEdit && !empty($education_list)): ?>
+            <?php foreach ($education_list as $edu): ?>
+                educationList.push({
+                    degree: '<?php echo htmlspecialchars($edu['degree']); ?>',
+                    school: '<?php echo htmlspecialchars($edu['school']); ?>',
+                    start_year: '<?php echo $edu['start_year']; ?>',
+                    end_year: '<?php echo $edu['end_year']; ?>'
+                });
+            <?php endforeach; ?>
+            displayEducation();
+        <?php endif; ?>
+        
+        <?php if ($isEdit && !empty($experience_list)): ?>
+            <?php foreach ($experience_list as $exp): ?>
+                experienceList.push({
+                    company: '<?php echo htmlspecialchars($exp['company']); ?>',
+                    position: '<?php echo htmlspecialchars($exp['position']); ?>',
+                    start_year: '<?php echo $exp['start_year']; ?>',
+                    end_year: '<?php echo $exp['end_year']; ?>'
+                });
+            <?php endforeach; ?>
+            displayExperience();
+        <?php endif; ?>
+        
+        <?php if ($isEdit && !empty($skills_list)): ?>
+            <?php foreach ($skills_list as $skill): ?>
+                skillList.push('<?php echo htmlspecialchars($skill); ?>');
+            <?php endforeach; ?>
+            displaySkills();
+        <?php endif; ?>
+        
+        <?php if ($isEdit && !empty($reference_list)): ?>
+            <?php foreach ($reference_list as $ref): ?>
+                referenceList.push('<?php echo htmlspecialchars($ref); ?>');
+            <?php endforeach; ?>
+            displayReferences();
+        <?php endif; ?>
+    </script>
     
 </body>
 </html>
