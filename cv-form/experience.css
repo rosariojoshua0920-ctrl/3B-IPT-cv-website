@@ -5,7 +5,7 @@ body {
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
-    background-color: #1f5c384f;
+    background-color: #fff5f5;
 }
 
 .page-wrapper {
@@ -18,9 +18,9 @@ body {
 
 .card {
     background-color: #ffffff;
-    border: 1px solid #d0d0d0;
+    border: 1px solid #e8d0d0;
     border-radius: 6px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 12px rgba(210, 47, 47, 0.08);
     padding: 36px 40px;
     width: 100%;
     max-width: 680px;
@@ -38,11 +38,11 @@ body {
 }
 
 /* Section headings */
-h2 {
+h1, h2 {
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 14px;
-    color: #111;
+    color: #c23030;
 }
 
 /* Two-column grid */
@@ -65,7 +65,11 @@ label {
     color: #333;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="date"],
+textarea,
+input[type="email"],
+input[type="tel"] {
     width: 100%;
     height: 30px;
     border: 1px solid #c8c8c8;
@@ -78,8 +82,13 @@ input[type="text"] {
     transition: border-color 0.15s;
 }
 
-input[type="text"]:focus {
-    border-color: #999;
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus {
+    border-color: #c23030;
+    box-shadow: 0 0 0 2px rgba(194, 48, 48, 0.1);
 }
 
 /* Center the add button */
@@ -107,9 +116,26 @@ button:hover {
     border-color: #888;
 }
 
+/* Submit and primary buttons */
+button[type="submit"],
+button.next {
+    background-color: #c23030;
+    color: #fff;
+    border: none;
+    padding: 7px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 2px;
+}
+
+button[type="submit"]:hover,
+button.next:hover {
+    background-color: #8f1f1f;
+}
+
 /* Next button */
 button.next {
-    background-color: #1a73e8;
+    background-color: #c23030;
     color: #fff;
     border: none;
     padding: 7px 28px;
@@ -119,7 +145,7 @@ button.next {
 }
 
 button.next:hover {
-    background-color: #1558b0;
+    background-color: #8f1f1f;
 }
 
 .next-btn {

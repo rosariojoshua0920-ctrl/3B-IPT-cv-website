@@ -1,260 +1,146 @@
+<?php
+session_start();
+include "db.php";
+
+// Check if editing
+$isEdit = isset($_GET['id']);
+$personal = array();
+
+if ($isEdit) {
+    $personal_id = mysqli_real_escape_string($conn, $_GET['id']);
+    $result = mysqli_query($conn, "SELECT * FROM personal_info WHERE id = $personal_id");
+    $personal = mysqli_fetch_assoc($result);
+    
+    if (!$personal) {
+        die("CV not found.");
+    }
+    
+    $_SESSION['personal_id'] = $personal_id;
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Personal Information - CV Generator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .form-page {
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .form-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            padding: 48px;
-        }
-
-        .form-title {
-            text-align: center;
-            color: #1a1a1a;
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 40px;
-        }
-
-        .photo-row {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 40px;
-        }
-
-        .photo-wrap {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff9999 0%, #ff7777 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .photo-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .photo-wrap::before {
-            content: '';
-            position: absolute;
-            width: 32px;
-            height: 32px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23cc0000'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z'/%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 13a3 3 0 11-6 0 3 3 0 016 0z'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: 1;
-        }
-
-        .photo-wrap img[src*="data:image"],
-        .photo-wrap img:not([src*="default"]) {
-            z-index: 2;
-        }
-
-        .photo-wrap img[src*="data:image"] ~ ::before,
-        .photo-wrap img:not([src*="default"]) ~ ::before {
-            display: none;
-        }
-
-        .photo-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .upload-btn {
-            background: #fff0f0;
-            color: #d32f2f;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .upload-btn:hover {
-            background: #ffe0e0;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin: 32px 0 20px;
-        }
-
-        .grid {
-            display: grid;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .two-cols {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .field {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-size: 14px;
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        input, textarea {
-            padding: 12px 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #d32f2f;
-            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
-        }
-
-        input::placeholder, textarea::placeholder {
-            color: #999;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            gap: 16px;
-        }
-
-        .btn-outline, .btn-primary {
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn-outline {
-            background: white;
-            color: #666;
-            border: 1px solid #e0e0e0;
-        }
-
-        .btn-outline:hover {
-            background: #f5f5f5;
-        }
-
-        .btn-primary {
-            background: #d32f2f;
-            color: white;
-            flex: 1;
-        }
-
-        .btn-primary:hover {
-            background: #b71c1c;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
-        }
-
-        @media (max-width: 640px) {
-            .form-card {
-                padding: 32px 24px;
-            }
-
-            .two-cols {
-                grid-template-columns: 1fr;
-            }
-
-            .form-actions {
-                flex-direction: column-reverse;
-            }
-
-            .btn-outline, .btn-primary {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="personal-info.css?v=<?php echo time(); ?>">
 </head>
 <body>
-    <h2>Curriculum Vitae</h2>
-        <form method="POST" action="../cv-form/experience.php" enctype="multipart/form-data">
-        <h2>Personal Information</h2>
-           <label>Photo:</label><br>
-                <input type="file" name="photo" accept="image/*" <?php echo $isEdit ? '' : 'required'; ?>><br><br>
-            <?php if ($isEdit && !empty($personal['photo_path'])): ?>
-                <small>Current Photo: <img src="<?php echo htmlspecialchars($personal['photo_path']); ?>" style="max-width: 100px;"></small><br><br>
-            <?php endif; ?>
-            
-            <label>First Name:</label><br>
-                <input type="text" id="first_name" name="first_name" placeholder="ex.Joshua" value="<?php echo htmlspecialchars($personal['first_name'] ?? ''); ?>" required><br> 
-            <label>Last Name</label><br> 
-                <input type="text" id="last_name" name="last_name" placeholder="ex. Rosario" value="<?php echo htmlspecialchars($personal['last_name'] ?? ''); ?>" required><br> 
-            <label>Extension Name (if applicable):</label>
-                <input type="text" id="extension_name" name="extension_name" placeholder="e.g. Jr., III " value="<?php echo htmlspecialchars($personal['extension_name'] ?? ''); ?>"><br>  
-        <h2>Contact Information</h2>
-            <label>Phone Number:</label><br>
-                <input type="tel" id="phone" name="phone" value="<?php echo htmlspecialchars($personal['phone'] ?? ''); ?>" required><br> 
-            <label>Email:</label><br>
-                <input type="email" id="email" name="email" placeholder="ex@example.com" value="<?php echo htmlspecialchars($personal['email'] ?? ''); ?>" required><br> 
-            <label>Address:</label><br> 
-                <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($personal['address'] ?? ''); ?>" required><br>
-        <h2>About Me</h2>
+    <div class="page-wrapper">
+        <div class="card">
+            <h1>Personal Information</h1>
 
+            <form method="POST" action="../cv-form/experience.php" enctype="multipart/form-data">
+                <!-- Photo Section -->
+                <div class="photo-upload">
+                    <div class="photo-preview" id="photoPreview">
+                        <?php if ($isEdit && !empty($personal['photo_path'])): ?>
+                            <img id="photoImg" src="<?php echo htmlspecialchars($personal['photo_path']); ?>" alt="Profile">
+                        <?php else: ?>
+                            <span>📷</span>
+                        <?php endif; ?>
+                    </div>
+                    <label for="photoInput" class="upload-btn">Choose Photo</label>
+                    <input type="file" id="photoInput" name="photo" accept="image/*">
+                </div>
+
+                <hr class="divider">
+
+                <!-- Personal Information Section -->
+                <div class="section">
+                    <h2>Personal Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>First Name:</label>
+                            <input type="text" name="first_name" placeholder="E.g. Joshua" value="<?php echo htmlspecialchars($personal['first_name'] ?? ''); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name:</label>
+                            <input type="text" name="last_name" placeholder="E.g. Rosario" value="<?php echo htmlspecialchars($personal['last_name'] ?? ''); ?>" required>
+                        </div>
+                    </div>
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label>Extension Name (if applicable):</label>
+                            <input type="text" name="extension_name" placeholder="E.g. Jr., Sr., III" value="<?php echo htmlspecialchars($personal['extension_name'] ?? ''); ?>">
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <!-- Contact Information Section -->
+                <div class="section">
+                    <h2>Contact Information</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Phone Number:</label>
+                            <input type="tel" name="phone" placeholder="E.g. +63 123 456 7890" value="<?php echo htmlspecialchars($personal['phone'] ?? ''); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="email" name="email" placeholder="E.g. name@example.com" value="<?php echo htmlspecialchars($personal['email'] ?? ''); ?>" required>
+                        </div>
+                    </div>
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label>Address:</label>
+                            <input type="text" name="address" placeholder="Street, City, Province" value="<?php echo htmlspecialchars($personal['address'] ?? ''); ?>" required>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <!-- About Me Section -->
+                <div class="section">
+                    <h2>About Me</h2>
+                    <div class="form-grid full">
+                        <div class="form-group">
+                            <label>Professional Summary:</label>
+                            <textarea name="about" placeholder="Tell us about yourself, your professional goals, and key achievements..." required><?php echo htmlspecialchars($personal['about'] ?? ''); ?></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" onclick="window.location.href='../main/main-page.php'">Cancel</button>
+                    <button type="submit"><?php echo $isEdit ? 'Update & Next' : 'Next'; ?></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Photo preview
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+        
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    let img = photoPreview.querySelector('img');
+                    if (!img) {
+                        img = document.createElement('img');
+                        img.id = 'photoImg';
+                        img.alt = 'Profile';
+                        photoPreview.innerHTML = '';
+                        photoPreview.appendChild(img);
+                    }
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>

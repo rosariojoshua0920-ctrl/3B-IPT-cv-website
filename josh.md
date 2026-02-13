@@ -418,3 +418,61 @@ if($conn->query($sql_personal) === TRUE){
 $conn->close();
 ?>
  -->
+
+
+ <<<<< HEAD
+    <h1>CV Generator</h1>
+    <nav>
+        <button onclick="loadContent('../main/main-page.php')">Main Page</button>
+        <button onclick="loadContent('../view-cv/view-cv.php')">View Result</button>
+    </nav>
+    <div id="content"></div>
+=======
+    <header class="site-header">
+        <div class="brand">CV Generator</div>
+        <nav class="site-nav">
+            <button class="nav-btn" onclick="loadContent('../main/main-page.php')" aria-label="Main Page">
+                <span>Main Page</span>
+            </button>
+            <button class="nav-btn" onclick="loadContent('../view-cv/view-cv.php')" aria-label="View CV">
+                <span>View CV</span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="content" class="content-area">
+        <!-- content will be loaded here -->
+    </main>
+<<<<<<< HEAD
+
+<?php
+session_start();
+include "db.php";
+
+// Check if editing
+$isEdit = isset($_GET['id']);
+$personal = array();
+
+if ($isEdit) {
+    $personal_id = mysqli_real_escape_string($conn, $_GET['id']);
+    $result = mysqli_query($conn, "SELECT * FROM personal_info WHERE id = $personal_id");
+    $personal = mysqli_fetch_assoc($result);
+    
+    if (!$personal) {
+        die("CV not found.");
+    }
+    
+    $_SESSION['personal_id'] = $personal_id;
+}
+
+?>
+
+<<<<<<< HEAD
+            <textarea id="about" name="about" rows="5" cols="40" required><?php echo htmlspecialchars($personal['about'] ?? ''); ?></textarea>
+            <button onclick="window.location.href='../layout-main-page/nav-bar-main.php'">Go to HomePage</button>
+            <button type="submit"><?php echo $isEdit ? 'Update & Next' : 'Next'; ?></button>
+=======
+            <textarea id="about" name="about" rows="5" cols="40" required></textarea>
+            <button type="submit">Next</button>
+>>>>>>> f3123985d4a222d6b64d0d7ae0b2fac87eff5b74
+</form>

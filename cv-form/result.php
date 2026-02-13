@@ -99,68 +99,207 @@ $references_query = mysqli_query($conn,
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>CV Preview</title>
-    <style>
-        body { font-family: Arial; padding: 40px; }
-        img { width: 150px; border-radius: 8px; }
-        h2 { margin-top: 30px; border-bottom: 1px solid #ccc; }
-    </style>
+    <link rel="stylesheet" href="result.css?v=<?php echo time(); ?>">
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>📄 Curriculum Vitae Preview</h1>
+        </div>
 
-<h1>Curriculum Vitae Preview</h1>
+        <div id="cv-container" class="size-a4">
+            <div class="cv-content">
+                <!-- Header with Photo -->
+                <div class="cv-header">
+                    <?php if (!empty($personal['photo_path'])): ?>
+                        <img src="<?php echo htmlspecialchars($personal['photo_path']); ?>" alt="Photo">
+                    <?php endif; ?>
+                    <div class="cv-name">
+                        <?php 
+                        echo htmlspecialchars($personal['first_name'] . " " . $personal['last_name']);
+                        if (!empty($personal['extension_name'])) {
+                            echo " " . htmlspecialchars($personal['extension_name']);
+                        }
+                        ?>
+                    </div>
+                    <div class="cv-contact">
+                        <?php if (!empty($personal['phone'])): ?>
+                            <span>📞 <?php echo htmlspecialchars($personal['phone']); ?></span>
+                        <?php endif; ?>
+                        <?php if (!empty($personal['email'])): ?>
+                            <span>📧 <?php echo htmlspecialchars($personal['email']); ?></span>
+                        <?php endif; ?>
+                        <br>
+                        <?php if (!empty($personal['address'])): ?>
+                            <span>📍 <?php echo htmlspecialchars($personal['address']); ?></span>
+                        <?php endif; ?>
+                    </div>
+                </div>
 
-<img src="<?php echo $personal['photo_path']; ?>"><br><br>
+                <!-- About Me -->
+                <?php if (!empty($personal['about'])): ?>
+                <div class="cv-section">
+                    <div class="cv-section-title">PROFESSIONAL SUMMARY</div>
+                    <p><?php echo nl2br(htmlspecialchars($personal['about'])); ?></p>
+                </div>
+                <?php endif; ?>
 
-<h2><?php 
-echo $personal['first_name'] . " " . 
-     $personal['last_name'] . " " . 
-     $personal['extension_name']; 
-?></h2>
+                <!-- Education -->
+                <?php 
+                $education_count = 0;
+                while($row = mysqli_fetch_assoc($education_query)) {
+                    if ($education_count == 0) {
+                        echo '<div class="cv-section">';
+                        echo '<div class="cv-section-title">EDUCATION</div>';
+                    }
+                    $education_count++;
+                ?>
+                    <div class="cv-entry">
+                        <div class="cv-entry-title"><?php echo htmlspecialchars($row['degree']); ?></div>
+                        <div class="cv-entry-subtitle"><?php echo htmlspecialchars($row['school']); ?></div>
+                        <div class="cv-entry-date">
+                            <?php echo htmlspecialchars($row['start_year']); ?> - 
+                            <?php echo htmlspecialchars($row['end_year']); ?>
+                        </div>
+                    </div>
+                <?php 
+                    if ($education_count > 0) {
+                        $remaining = mysqli_num_rows($education_query);
+                        if ($remaining == 0) {
+                            echo '</div>';
+                        }
+                    }
+                } 
+                ?>
 
-<p><strong>Phone:</strong> <?php echo $personal['phone']; ?></p>
-<p><strong>Email:</strong> <?php echo $personal['email']; ?></p>
-<p><strong>Address:</strong> <?php echo $personal['address']; ?></p>
+                <!-- Work Experience -->
+                <?php 
+                $exp_count = 0;
+                while($row = mysqli_fetch_assoc($work_query)) {
+                    if ($exp_count == 0) {
+                        echo '<div class="cv-section">';
+                        echo '<div class="cv-section-title">WORK EXPERIENCE</div>';
+                    }
+                    $exp_count++;
+                ?>
+                    <div class="cv-entry">
+                        <div class="cv-entry-title"><?php echo htmlspecialchars($row['position']); ?></div>
+                        <div class="cv-entry-subtitle"><?php echo htmlspecialchars($row['company']); ?></div>
+                        <div class="cv-entry-date">
+                            <?php echo htmlspecialchars($row['start_year']); ?> - 
+                            <?php echo htmlspecialchars($row['end_year']); ?>
+                        </div>
+                    </div>
+                <?php 
+                    if ($exp_count > 0) {
+                        $remaining = mysqli_num_rows($work_query);
+                        if ($remaining == 0) {
+                            echo '</div>';
+                        }
+                    }
+                } 
+                ?>
 
-<h2>About Me</h2>
-<p><?php echo $personal['about']; ?></p>
+                <!-- Skills -->
+                <?php 
+                $skill_count = 0;
+                while($row = mysqli_fetch_assoc($skills_query)) {
+                    if ($skill_count == 0) {
+                        echo '<div class="cv-section">';
+                        echo '<div class="cv-section-title">SKILLS</div>';
+                    }
+                    $skill_count++;
+                ?>
+                    <div class="cv-entry">
+                        <p>• <?php echo htmlspecialchars($row['skill_name']); ?></p>
+                    </div>
+                <?php 
+                    if ($skill_count > 0) {
+                        $remaining = mysqli_num_rows($skills_query);
+                        if ($remaining == 0) {
+                            echo '</div>';
+                        }
+                    }
+                } 
+                ?>
 
-<h2>Education</h2>
-<?php while($row = mysqli_fetch_assoc($education_query)) { ?>
-    <p>
-        <?php echo $row['degree']; ?> - 
-        <?php echo $row['school']; ?> 
-        (<?php echo $row['start_year']; ?> - 
-        <?php echo $row['end_year']; ?>)
-    </p>
-<?php } ?>
+                <!-- References -->
+                <?php 
+                $ref_count = 0;
+                while($row = mysqli_fetch_assoc($references_query)) {
+                    if ($ref_count == 0) {
+                        echo '<div class="cv-section">';
+                        echo '<div class="cv-section-title">REFERENCES</div>';
+                    }
+                    $ref_count++;
+                ?>
+                    <div class="cv-entry">
+                        <p><?php echo htmlspecialchars($row['reference_name']); ?></p>
+                    </div>
+                <?php 
+                    if ($ref_count > 0) {
+                        $remaining = mysqli_num_rows($references_query);
+                        if ($remaining == 0) {
+                            echo '</div>';
+                        }
+                    }
+                } 
+                ?>
+            </div>
+        </div>
 
+        <div class="controls">
+            <select id="paperSize" class="paper-size-select" onchange="changePaperSize()">
+                <option value="a4">📋 A4 (210 x 297mm)</option>
+                <option value="legal">📋 Legal (8.5 x 14in)</option>
+                <option value="short">📋 Short (210 x 200mm)</option>
+            </select>
+            <button class="btn-primary" onclick="printCV()">🖨️ Print CV</button>
+            <button class="btn-primary" onclick="downloadPDF()">⬇️ Download PDF</button>
+            <button class="btn-secondary" onclick="editCV()">✏️ Edit CV</button>
+            <button class="btn-secondary" onclick="goHome()">🏠 Home</button>
+        </div>
+    </div>
 
-<?php while($row = mysqli_fetch_assoc($work_query)) { ?>
-<h2>Work Experience</h2>
-    <p>
-        <?php echo $row['position']; ?> at 
-        <?php echo $row['company']; ?>
-        (<?php echo $row['start_year']; ?> - 
-        <?php echo $row['end_year']; ?>)
-    </p>
-<?php } ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function changePaperSize() {
+            const size = document.getElementById('paperSize').value;
+            const container = document.getElementById('cv-container');
+            
+            container.classList.remove('size-a4', 'size-legal', 'size-short');
+            container.classList.add('size-' + size);
+        }
 
-<h2>Skills</h2>
-<?php while($row = mysqli_fetch_assoc($skills_query)) { ?>
-    <p><?php echo $row['skill_name']; ?></p>
-<?php } ?>
+        function printCV() {
+            window.print();
+        }
 
-<h2>References</h2>
-<?php while($row = mysqli_fetch_assoc($references_query)) { ?>
-    <p><?php echo $row['reference_name']; ?></p>
-<?php } ?>
+        function downloadPDF() {
+            const element = document.getElementById('cv-container');
+            const opt = {
+                margin: 10,
+                filename: 'curriculum-vitae.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
 
-<button onclick="window.print()">Print CV</button>
-<button onclick="window.location.href='personal-info.php'">Edit CV</button>
-<button >Download</button>
-<button onclick="window.location.href='../layout-main-page/nav-bar-main.php'">Go to HomePage</button>
+        function editCV() {
+            window.location.href = 'personal-info.php?id=<?php echo $personal_id; ?>';
+        }
 
-
+        function goHome() {
+            window.location.href = '../layout-main-page/nav-bar-main.php';
+        }
+    </script>
 </body>
 </html>
