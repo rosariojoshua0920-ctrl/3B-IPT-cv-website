@@ -201,7 +201,11 @@ function addExperience() {
     const startYear = document.querySelector('input[name="work_start_year"]').value;
     const endYear = document.querySelector('input[name="work_end_year"]').value;
     
-    if (company && position && startYear && endYear) {
+    if (company || position || startYear || endYear) {
+        if (!company || !position || !startYear || !endYear) {
+            alert('Please fill in all work experience fields or leave all empty');
+            return;
+        }
         experienceList.push({
             company: company,
             position: position,
@@ -216,8 +220,6 @@ function addExperience() {
         document.querySelector('input[name="position"]').value = '';
         document.querySelector('input[name="work_start_year"]').value = '';
         document.querySelector('input[name="work_end_year"]').value = '';
-    } else {
-        alert('Please fill in all work experience fields');
     }
 }
 
@@ -353,7 +355,7 @@ function validateAndNext() {
         appendHiddenInput(form, `education[${index}][end_year]`, edu.end_year);
     });
     
-    // Add experience data
+    // Add experience data (optional)
     experienceList.forEach((exp, index) => {
         appendHiddenInput(form, `experience[${index}][company]`, exp.company);
         appendHiddenInput(form, `experience[${index}][position]`, exp.position);

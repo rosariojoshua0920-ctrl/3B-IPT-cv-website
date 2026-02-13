@@ -89,19 +89,19 @@ $_SESSION['about'] = $_POST['about'];
         <div class="form-grid">
             <div class="form-group">
                 <label>Company name:</label>
-                <input type="text" name="company" required>
+                <input type="text" name="company">
             </div>
             <div class="form-group">
                 <label>Position:</label>
-                <input type="text" name="position" required>
+                <input type="text" name="position">
             </div>
             <div class="form-group">
                 <label>Start Year:</label>
-                <input type="date" name="work_start_year" required>
+                <input type="date" name="work_start_year">
             </div>
             <div class="form-group">
                 <label>End Year:</label>
-                <input type="date" name="work_end_year" required>
+                <input type="date" name="work_end_year">
             </div>
         </div>
         <div class="btn-center">

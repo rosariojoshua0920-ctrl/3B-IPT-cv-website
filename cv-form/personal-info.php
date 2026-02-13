@@ -231,88 +231,28 @@
     </style>
 </head>
 <body>
-    <main class="form-page">
-        <form class="form-card" method="POST" action="experience.php" enctype="multipart/form-data">
-            <h1 class="form-title">Personal Information</h1>
-
-            <div class="photo-row">
-                <div class="photo-wrap">
-                    <img id="photoPreview" src="../uploads/default-avatar.png" alt="Profile Photo">
-                </div>
-                <div class="photo-actions">
-                    <label for="photoInput" class="upload-btn">Upload Photo</label>
-                    <input type="file" id="photoInput" name="photo" accept="image/*" hidden>
-                </div>
-            </div>
-
-            <section class="grid two-cols">
-                <div class="field">
-                    <label for="first_name">First Name</label>
-                    <input type="text" id="first_name" name="first_name" placeholder="e.g. Joshua" required>
-                </div>
-                <div class="field">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" placeholder="e.g. Rosario" required>
-                </div>
-            </section>
-
-            <div class="field">
-                <label for="extension_name">Extension Name (if applicable)</label>
-                <input type="text" id="extension_name" name="extension_name" placeholder="e.g. Jr., III">
-            </div>
-
-            <h2 class="section-title">Contact Information</h2>
-            <section class="grid two-cols">
-                <div class="field">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567" required>
-                </div>
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="ex@example.com" required>
-                </div>
-            </section>
-
-            <div class="field">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address" placeholder="City, State/Country" required>
-            </div>
-
-            <h2 class="section-title">About Me</h2>
-            <div class="field">
-                <textarea id="about" name="about" rows="6" placeholder="Write a brief professional summary about yourself..." required></textarea>
-            </div>
-
-            <div class="form-actions">
-                <a class="btn-outline" href="../layout-main-page/nav-bar-main.php">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-                    </svg>
-                    Back to Main Page
-                </a>
-                <button class="btn-primary" type="submit">
-                    Next
-                    
-                </button>
-            </div>
-        </form>
-    </main>
-
-    <script>
-        // Photo upload preview
-        const photoInput = document.getElementById('photoInput');
-        const photoPreview = document.getElementById('photoPreview');
-
-        photoInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    photoPreview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
+    <h2>Curriculum Vitae</h2>
+        <form method="POST" action="../cv-form/experience.php" enctype="multipart/form-data">
+        <h2>Personal Information</h2>
+           <label>Photo:</label><br>
+                <input type="file" name="photo" accept="image/*" ><br><br>
+            
+            <label>First Name:</label><br>
+                <input type="text" id="first_name" name="first_name" placeholder="ex.Joshua" required><br> 
+            <label>Last Name</label><br> 
+                <input type="text" id="last_name" name="last_name" placeholder="ex. Rosario" required><br> 
+            <label>Extension Name (if applicable):</label>
+                <input type="text" id="extension_name" name="extension_name" placeholder="e.g. Jr., III "><br>  
+        <h2>Contact Information</h2>
+            <label>Phone Number:</label><br>
+                <input type="tel" id="phone" name="phone" required><br> 
+            <label>Email:</label><br>
+                <input type="email" id="email" name="email" placeholder="ex@example.com" required><br> 
+            <label>Address:</label><br> 
+                <input type="text" id="address" name="address" required><br>
+        <h2>About Me</h2>
+            <textarea id="about" name="about" rows="5" cols="40" required></textarea>
+            <button type="submit">Next</button>
+</form>
 </body>
 </html>
