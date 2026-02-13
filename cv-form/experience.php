@@ -1,3 +1,40 @@
+<?php
+session_start();
+include "db.php";
+
+/* Upload Photo */
+$photoName = $_FILES['photo']['name'];
+$tempName = $_FILES['photo']['tmp_name'];
+$folder = "uploads/" . $photoName;
+move_uploaded_file($tempName, $folder);
+
+/* Insert personal info */
+$sql = "INSERT INTO personal_info 
+(photo_path, first_name, last_name, extension_name, phone, email, address, about)
+VALUES 
+('$folder','{$_POST['first_name']}','{$_POST['last_name']}',
+'{$_POST['extension_name']}','{$_POST['phone']}',
+'{$_POST['email']}','{$_POST['address']}','{$_POST['about']}')";
+
+if (!mysqli_query($conn, $sql)) {
+    die("Error: " . mysqli_error($conn));
+}
+
+/* Get inserted ID */
+$personal_id = mysqli_insert_id($conn);
+
+/* Save to session */
+$_SESSION['personal_id'] = $personal_id;
+$_SESSION['photo'] = $folder;
+$_SESSION['first_name'] = $_POST['first_name'];
+$_SESSION['last_name'] = $_POST['last_name'];
+$_SESSION['extension_name'] = $_POST['extension_name'];
+$_SESSION['phone'] = $_POST['phone'];
+$_SESSION['email'] = $_POST['email'];
+$_SESSION['address'] = $_POST['address'];
+$_SESSION['about'] = $_POST['about'];
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +48,7 @@
 
 
  
-     <form method="POST" action="../cv-form/result.php" ></form>
+    <form method="POST" action="../cv-form/result.php" >
     <div class="page-wrapper">
         <div class="card">
 
@@ -31,12 +68,12 @@
 
     <div class="form-group">
         <label>Start Year:</label>
-        <input type="text" name="school_start_year" placeholder="YYYY" required>
+        <input type="date" name="school_start_year" required>
             </div>
 
     <div class="form-group">
         <label>End Year:</label>
-        <input type="text" name="school_end_year" placeholder="YYYY" required>
+        <input type="date" name="school_end_year" required>
             </div>
         </div>
 
@@ -60,11 +97,11 @@
             </div>
             <div class="form-group">
                 <label>Start Year:</label>
-                <input type="text" name="work_start_year" placeholder="YYYY" required>
+                <input type="date" name="work_start_year" required>
             </div>
             <div class="form-group">
                 <label>End Year:</label>
-                <input type="text" name="work_end_year" placeholder="YYYY" required>
+                <input type="date" name="work_end_year" required>
             </div>
         </div>
         <div class="btn-center">
@@ -108,7 +145,7 @@
     </div>
         </div>
             </div>
-</form>
+    </form>
     <script src="experience.js"></script>
     
 </body>
