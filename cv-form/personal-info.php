@@ -27,6 +27,7 @@
                 <input type="text" id="address" name="address" required><br>
         <h2>About Me</h2>
             <textarea id="about" name="about" rows="5" cols="40" required></textarea>
+            <button onclick="window.location.href='../layout-main-page/nav-bar-main.php'">Go to HomePage</button>
             <button type="submit">Next</button>
 </form>
 </body>

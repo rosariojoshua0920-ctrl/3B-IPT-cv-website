@@ -126,8 +126,9 @@ echo $personal['first_name'] . " " .
     </p>
 <?php } ?>
 
-<h2>Work Experience</h2>
+
 <?php while($row = mysqli_fetch_assoc($work_query)) { ?>
+<h2>Work Experience</h2>
     <p>
         <?php echo $row['position']; ?> at 
         <?php echo $row['company']; ?>
@@ -148,8 +149,8 @@ echo $personal['first_name'] . " " .
 
 <button onclick="window.print()">Print CV</button>
 <button onclick="window.location.href='personal-info.php'">Edit CV</button>
-<button onclick="window.location.href='download.php'">Download</button>
-<button onclick="window.location.href='index.php'">Go to HomePage</button>
+<button >Download</button>
+<button onclick="window.location.href='../layout-main-page/nav-bar-main.php'">Go to HomePage</button>
 
 
 </body>
