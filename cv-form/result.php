@@ -146,5 +146,11 @@ echo $personal['first_name'] . " " .
     <p><?php echo $row['reference_name']; ?></p>
 <?php } ?>
 
+<button onclick="window.print()">Print CV</button>
+<button onclick="window.location.href='personal-info.php'">Edit CV</button>
+<button onclick="window.location.href='download.php'">Download</button>
+<button onclick="window.location.href='index.php'">Go to HomePage</button>
+
+
 </body>
 </html>
