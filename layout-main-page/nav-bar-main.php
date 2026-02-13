@@ -7,12 +7,7 @@
     <link rel="stylesheet" href="nav-bar-main.css">
 </head>
 <body>
-    <h1>CV Generator</h1>
-    <nav>
-        <button onclick="loadContent('../main/main-page.php')">Main Page</button>
-        <button onclick="loadContent('../view-cv/view-cv.php')">View Result</button>
-    </nav>
-    <div id="content"></div>
+
     <script src="nav-bar-main.js"></script>
 </body>
 </html>
