@@ -1,4 +1,3 @@
-/* Red-themed CV Result Page */
 
 * {
     margin: 0;
@@ -53,49 +52,49 @@ body {
 }
 
 .btn-print {
-    background-color: #cc0000;
+    background-color: #000000;
     color: white;
 }
 
 .btn-print:hover {
-    background-color: #990000;
+    background-color: #333333;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(204, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-download {
-    background-color: #cc0000;
+    background-color: #000000;
     color: white;
 }
 
 .btn-download:hover {
-    background-color: #990000;
+    background-color: #333333;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(204, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .btn-edit {
-    background-color: #cc0000;
-    color: #fff;
-    border: 2px solid #cc0000;
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
 }
 
 .btn-edit:hover {
-    background-color: #990000;
-    border-color: #660000;
-    color: #fff;
+    background-color: #f0f0f0;
+    border-color: #333333;
+    color: #000000;
 }
 
 .btn-home {
-    background-color: #cc0000;
-    color: #fff;
-    border: 2px solid #cc0000;
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
 }
 
 .btn-home:hover {
-    background-color: #990000;
-    border-color: #660000;
-    color: #fff;
+    background-color: #f0f0f0;
+    border-color: #333333;
+    color: #000000;
 }
 
 /* Page Wrapper */
@@ -119,7 +118,7 @@ body {
     gap: 30px;
     margin-bottom: 40px;
     padding-bottom: 30px;
-    border-bottom: 3px solid #c23030;
+    border-bottom: 3px solid #000000;
 }
 
 .photo-container {
@@ -131,7 +130,7 @@ body {
     height: 140px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #c23030;
+    border: 4px solid #000000;
 }
 
 .header-info {
@@ -144,7 +143,7 @@ body {
 .name {
     font-size: 36px;
     font-weight: 700;
-    color: #c23030;
+    color: #000000;
     margin-bottom: 16px;
     line-height: 1.2;
 }
@@ -164,7 +163,7 @@ body {
 }
 
 .contact-item svg {
-    color: #c23030;
+    color: #000000;
     flex-shrink: 0;
 }
 
@@ -176,10 +175,10 @@ body {
 .section-title {
     font-size: 22px;
     font-weight: 700;
-    color: #c23030;
+    color: #000000;
     margin-bottom: 18px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #e8d0d0;
+    border-bottom: 2px solid #cccccc;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -231,13 +230,13 @@ body {
 }
 
 .skill-tag {
-    background-color: #fff5f5;
-    color: #c23030;
+    background-color: #f5f5f5;
+    color: #333333;
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 14px;
     font-weight: 500;
-    border: 1px solid #ffd0d0;
+    border: 1px solid #cccccc;
 }
 
 /* References */
