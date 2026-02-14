@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Generator</title>
-    <link rel="stylesheet" href="nav-bar-main.css">
+    <link rel="stylesheet" href="../layout-main-page/nav-bar-main.css">
 </head>
 <body>
     <header class="site-header">
-        <div class="brand">Student CV Generator</div>
+        <h1 class="brand">Student CV Generator</h1>
         <nav class="site-nav">
             <button class="nav-btn" onclick="loadContent('../main/main-page.php')" aria-label="Home Page">
                 <span>Home</span>
