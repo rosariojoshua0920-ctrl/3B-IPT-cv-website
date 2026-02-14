@@ -52,49 +52,49 @@ body {
 }
 
 .btn-print {
-    background-color: #000000;
+    background-color: #cc0000;
     color: white;
 }
 
 .btn-print:hover {
-    background-color: #333333;
+    background-color: #990000;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(204, 0, 0, 0.3);
 }
 
 .btn-download {
-    background-color: #000000;
+    background-color: #cc0000;
     color: white;
 }
 
 .btn-download:hover {
-    background-color: #333333;
+    background-color: #990000;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(204, 0, 0, 0.3);
 }
 
 .btn-edit {
-    background-color: #ffffff;
-    color: #000000;
-    border: 2px solid #000000;
+    background-color: #cc0000;
+    color: #fff;
+    border: 2px solid #cc0000;
 }
 
 .btn-edit:hover {
-    background-color: #f0f0f0;
-    border-color: #333333;
-    color: #000000;
+    background-color: #990000;
+    border-color: #660000;
+    color: #fff;
 }
 
 .btn-home {
-    background-color: #ffffff;
-    color: #000000;
-    border: 2px solid #000000;
+    background-color: #cc0000;
+    color: #fff;
+    border: 2px solid #cc0000;
 }
 
 .btn-home:hover {
-    background-color: #f0f0f0;
-    border-color: #333333;
-    color: #000000;
+    background-color: #990000;
+    border-color: #660000;
+    color: #fff;
 }
 
 /* Page Wrapper */

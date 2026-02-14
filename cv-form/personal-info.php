@@ -62,7 +62,7 @@ if ($isEdit) {
                     <div class="form-grid">
                         <div class="form-group">
                             <label>First Name:</label>
-                            <input type="text" name="first_name" placeholder="E.g. Joshua" value="<?php echo htmlspecialchars($personal['first_name'] ?? ''); ?>" required>
+                            <input type="text" name="first_name" placeholder="E.g. RJ Joshua" value="<?php echo htmlspecialchars($personal['first_name'] ?? ''); ?>" required>
                         </div>
                         <div class="form-group">
                             <label>Last Name:</label>
@@ -89,7 +89,7 @@ if ($isEdit) {
                         </div>
                         <div class="form-group">
                             <label>Email:</label>
-                            <input type="email" name="email" placeholder="E.g. name@example.com" value="<?php echo htmlspecialchars($personal['email'] ?? ''); ?>" required>
+                            <input type="email" name="email" placeholder="E.g. marielfernando@example.com" value="<?php echo htmlspecialchars($personal['email'] ?? ''); ?>" required>
                         </div>
                     </div>
                     <div class="form-grid full">
