@@ -107,7 +107,7 @@ $personal = mysqli_fetch_assoc(mysqli_query($conn,
 "SELECT * FROM personal_info WHERE id = $personal_id"));
 
 $education_query = mysqli_query($conn,
-"SELECT * FROM education WHERE personal_info_id = $personal_id ORDER BY start_year DESC");
+"SELECT DISTINCT degree, school, start_year, end_year FROM education WHERE personal_info_id = $personal_id ORDER BY start_year DESC");
 if (!$education_query) {
     die("Database Error: " . mysqli_error($conn));
 }
@@ -116,10 +116,10 @@ $work_query = mysqli_query($conn,
 "SELECT * FROM work_experience WHERE personal_info_id = $personal_id ORDER BY start_year DESC");
 
 $skills_query = mysqli_query($conn,
-"SELECT * FROM skills WHERE personal_info_id = $personal_id");
+"SELECT DISTINCT skill_name FROM skills WHERE personal_info_id = $personal_id");
 
 $references_query = mysqli_query($conn,
-"SELECT * FROM reference_list WHERE personal_info_id = $personal_id");
+"SELECT DISTINCT reference_name, reference_contact FROM reference_list WHERE personal_info_id = $personal_id");
 
 ?>
 
@@ -129,7 +129,7 @@ $references_query = mysqli_query($conn,
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Preview - <?php echo htmlspecialchars($personal['first_name'] . ' ' . $personal['last_name']); ?></title>
-    <link rel="stylesheet" href="../cv-form/result.css">
+    <link rel="stylesheet" href="../cv-form/result.css"></body>
 </head>
 <body>
 
@@ -147,14 +147,7 @@ $references_query = mysqli_query($conn,
             </svg> -->
             Print CV
         </button>
-        <button onclick="downloadPDF()" class="btn btn-download">
-            <!-- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg> -->
-            Download PDF
-        </button>
+        
         <button onclick="window.location.href='personal-info.php?id=<?php echo $personal_id; ?>'" class="btn btn-edit">
             <!-- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -323,14 +316,7 @@ $references_query = mysqli_query($conn,
     </div>
 </div>
 
-<script>
-    function downloadPDF() {
-        // For now, use print dialog with save as PDF option
-        // You can integrate a proper PDF library later if needed
-        alert('Please use your browser\'s Print dialog and select "Save as PDF" as the printer.');
-        window.print();
-    }
-</script>
+
 
 </body>
 </html>
