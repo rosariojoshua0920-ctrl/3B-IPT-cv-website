@@ -51,7 +51,7 @@ $total_cvs = mysqli_num_rows($result);
             <h1>Curriculum Vitae</h1>
             
             <div class="top-actions">
-                <a onclick="history.back()" class="back-link">← Back to Home</a>
+                <a href="../main/main-page.php" class="back-link">← Back to Home</a>
                 
                 <!-- Search Form -->
                 <form method="GET" action="/cv_website/view-cv/view-cv.php" class="search-form">
