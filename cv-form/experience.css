@@ -96,9 +96,9 @@ input[type="tel"]:focus {
 
 /* Add buttons */
 button {
-    background-color: #fff;
-    color: #333;
-    border: 1.5px solid #aaa;
+    background-color:#cc0000;
+    color: #fff;
+    border: 1.5px solid #cc0000;
     padding: 5px 18px;
     font-size: 13px;
     font-weight: 600;
@@ -108,14 +108,14 @@ button {
 }
 
 button:hover {
-    background-color: #f0f0f0;
-    border-color: #888;
+    background-color: #990000;
+    border-color: #660000;
 }
 
 /* Submit and primary buttons */
 button[type="submit"],
-button.next {
-    background-color: #c23030;
+button.next, button.back {
+    background-color: #cc0000;
     color: #fff;
     border: none;
     padding: 7px 28px;
@@ -126,12 +126,12 @@ button.next {
 
 button[type="submit"]:hover,
 button.next:hover {
-    background-color: #8f1f1f;
+    background-color: #990000;
 }
 
 /* Next button */
-button.next {
-    background-color: #c23030;
+.btn {
+    background-color: #cc0000;
     color: #fff;
     border: none;
     padding: 7px 28px;
@@ -140,9 +140,6 @@ button.next {
     border-radius: 2px;
 }
 
-button.next:hover {
-    background-color: #8f1f1f;
-}
 
 .next-btn {
     margin-top: 20px;
@@ -167,7 +164,7 @@ button.next:hover {
 .entry-item .remove-btn {
     background: none;
     border: none;
-    color: #c0392b;
+    color: #cc0000;
     font-size: 16px;
     cursor: pointer;
     padding: 0 4px;
@@ -176,6 +173,6 @@ button.next:hover {
 }
 
 .entry-item .remove-btn:hover {
-    color: #922b21;
+    color: #990000;
     background: none;
 }
