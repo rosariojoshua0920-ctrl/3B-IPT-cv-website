@@ -15,8 +15,9 @@
             
             <h2><strong>Welcome to the CV Generator</strong></h2>
             <p>Click the button below to start creating your CV.</p>
-            <button onclick="window.location.href='../cv-form/personal-info.php'">Start creating your CV</button>
-            </div> 
+            <button class="btn-create" onclick="window.location.href='../cv-form/personal-info.php'">Start creating your CV</button>
+            <br><br>
+            <p>Already have a CV? <button class="btn-view" onclick="loadContent('../view-cv/view-cv.php')">View your CVs here.</button></p>
             </div>
    
   

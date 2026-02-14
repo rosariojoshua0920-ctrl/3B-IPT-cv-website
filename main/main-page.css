@@ -25,7 +25,7 @@
             font-size: 16px;
             margin-bottom: 30px;
         }
-        .create-box button {
+        .create-box button.btn-create {
             background-color: #c23030;
             color: white;
             border: none;
@@ -34,4 +34,10 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            margin-bottom: -40px;
+        }
+        .btn-view {
+            color:#c23030;
+            background-color: transparent;
+            border:transparent;
         }
