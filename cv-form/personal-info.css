@@ -1,4 +1,4 @@
-/* Red-themed Personal Information Form */
+
 
 * {
     margin: 0;
@@ -29,7 +29,7 @@ body {
     box-shadow: 0 2px 12px rgba(210, 47, 47, 0.08);
     padding: 36px 40px;
     width: 100%;
-    max-width: 680px;
+    max-width: 750px;
 }
 
 .divider {
@@ -151,8 +151,18 @@ input[type="file"] {
     object-fit: cover;
 }
 
+
+
 .photo-preview span {
     font-size: 40px;
+}
+
+.user-icon {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .upload-btn {

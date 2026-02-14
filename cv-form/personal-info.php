@@ -16,6 +16,10 @@ if ($isEdit) {
     }
     
     $_SESSION['personal_id'] = $personal_id;
+} else {
+    // IMPORTANT: Clear session for new CV
+    session_destroy();
+    session_start();
 }
 
 ?>
@@ -43,14 +47,14 @@ if ($isEdit) {
                         <?php if ($isEdit && !empty($personal['photo_path'])): ?>
                             <img id="photoImg" src="<?php echo htmlspecialchars($personal['photo_path']); ?>" alt="Profile">
                         <?php else: ?>
-                            <span>📷</span>
+                            <span class="user-icon"><img src="../icons/user.png" alt="user-icon"></span>
                         <?php endif; ?>
-                    </div>
+                    </div
                     <label for="photoInput" class="upload-btn">Choose Photo</label>
                     <input type="file" id="photoInput" name="photo" accept="image/*">
                 </div>
 
-                <hr class="divider">
+                
 
                 <!-- Personal Information Section -->
                 <div class="section">
