@@ -2,11 +2,11 @@
 session_start();
 include "db.php";
 
-// Get personal_id from session (POST/create) or URL parameter (GET/view)
-if (isset($_SESSION['personal_id'])) {
-    $personal_id = $_SESSION['personal_id'];
-} elseif (isset($_GET['id'])) {
+// Get personal_id from URL parameter (GET/view) or session (POST/create)
+if (isset($_GET['id'])) {
     $personal_id = intval($_GET['id']);
+} elseif (isset($_SESSION['personal_id'])) {
+    $personal_id = $_SESSION['personal_id'];
 } else {
     die("Error: Personal ID not found.");
 }
@@ -136,6 +136,9 @@ $references_query = mysqli_query($conn,
 <!-- Action buttons - hidden when printing -->
 <div class="action-bar no-print">
     <div class="action-buttons">
+        <a href="/cv_website/view-cv/view-cv.php" class="btn btn-home">
+            ← Back to CVs
+        </a>
         <button onclick="window.print()" class="btn btn-print">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="6 9 6 2 18 2 18 9"></polyline>
