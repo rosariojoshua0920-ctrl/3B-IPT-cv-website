@@ -49,7 +49,7 @@ if ($isEdit) {
                         <?php else: ?>
                             <span class="user-icon"><img src="../icons/user.png" alt="user-icon"></span>
                         <?php endif; ?>
-                    </div
+                    </div>
                     <label for="photoInput" class="upload-btn">Choose Photo</label>
                     <input type="file" id="photoInput" name="photo" accept="image/*">
                 </div>
