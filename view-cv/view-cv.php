@@ -43,11 +43,7 @@ $result = mysqli_query($conn, $query);
 <body>
     <h1>My CVs</h1>
     
-    <?php if (isset($_GET['success'])): ?>
-        <div style="background-color: #d4edda; color: #155724; padding: 12px; border-radius: 4px; margin-bottom: 15px;">
-            ✓ CV deleted successfully
-        </div>
-    <?php endif; ?>
+    
     
     <?php if (isset($_GET['error'])): ?>
         <div style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 15px;">

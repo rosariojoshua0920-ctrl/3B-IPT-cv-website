@@ -1,108 +1,3 @@
-// // Helper: get input value by name and clear it
-// function getAndClear(name) {
-//     const el = document.querySelector(`input[name="${name}"]`);
-//     const val = el ? el.value.trim() : '';
-//     if (el) el.value = '';
-//     return val;
-// }
-
-// // Helper: append an entry item to a list container
-// function appendEntry(containerId, text) {
-//     const list = document.getElementById(containerId);
-//     if (!list.querySelector('.entry-list')) {
-//         const ul = document.createElement('div');
-//         ul.className = 'entry-list';
-//         list.appendChild(ul);
-//     }
-//     const ul = list.querySelector('.entry-list');
-
-//     const item = document.createElement('div');
-//     item.className = 'entry-item';
-//     item.innerHTML = `<span>${text}</span><button class="remove-btn" title="Remove">&#x2715;</button>`;
-//     item.querySelector('.remove-btn').addEventListener('click', () => item.remove());
-//     ul.appendChild(item);
-// }
-
-// // Add Education
-// function addEducation() {
-//     const degree    = getAndClear('degree');
-//     const school    = getAndClear('school');
-//     const startYear = getAndClear('school_start_year');
-//     const endYear   = getAndClear('school_end_year');
-
-//     if (!school) { alert('Please enter a Degree and School name.'); return; }
-
-//     const parts = [];
-//     if (degree)    parts.push(degree);
-//     if (school)    parts.push(school);
-//     if (startYear || endYear) parts.push(`(${startYear || '?'} – ${endYear || 'Present'})`);
-
-//     appendEntry('education-list', parts.join(' | '));
-// }
-
-// // Add Work Experience
-// function addExperience() {
-//     const company   = getAndClear('company');
-//     const position  = getAndClear('position');
-//     const startYear = getAndClear('work_start_year');
-//     const endYear   = getAndClear('work_end_year');
-
-//     if (!company && !position) { alert('Please enter a company or position.'); return; }
-
-//     const parts = [];
-//     if (position) parts.push(position);
-//     if (company)  parts.push(`at ${company}`);
-//     if (startYear || endYear) parts.push(`(${startYear || '?'} – ${endYear || 'Present'})`);
-
-//     appendEntry('experience-list', parts.join(' '));
-// }
-
-// // Add Skill
-// function addSkill() {
-//     const skill = getAndClear('skill');
-//     if (!skill) { alert('Please enter a skill.'); return; }
-//     appendEntry('skill-list', skill);
-// }
-
-// // Add Reference
-// function addReference() {
-//     const reference = getAndClear('reference');
-//     if (!reference) { alert('Please enter a reference.'); return; }
-//     appendEntry('reference-list', reference);
-// }
-
-// // Next / Submit
-// function submitForm() {
-//     // Placeholder: collect data and proceed
-//     alert('Proceeding to next step...');
-// }
-
-//         function validateAndNext() {
-//             // Get all inputs/textareas in the current content
-//             const requiredFields = document.querySelectorAll('input[required], textarea[required]');
-//             let isValid = true;
-            
-//             requiredFields.forEach(field => {
-//                 if (!field.value.trim()) {
-//                     isValid = false;
-//                     field.style.borderColor = 'red';
-//                     field.style.borderWidth = '2px';
-//                 } else {
-//                     field.style.borderColor = '';
-//                 }
-//             });
-            
-//             if (!isValid) {
-//                 alert('Please fill in all required fields');
-//                 return;
-//             }
-            
-//             // Save form data and move to next
-//             document.querySelector('form').submit();
-//         }
-
-        
-
 // Storage arrays for form data
 let educationList = [];
 let experienceList = [];
@@ -111,57 +6,42 @@ let referenceList = [];
 
 // Load existing data from session when page loads
 window.addEventListener('DOMContentLoaded', function() {
-    // Load existing education
-    if (typeof existingEducation !== 'undefined' && existingEducation.length > 0) {
-        educationList = existingEducation;
-        displayEducation();
-    }
-    
-    // Load existing experience
-    if (typeof existingExperience !== 'undefined' && existingExperience.length > 0) {
-        experienceList = existingExperience;
-        displayExperience();
-    }
-    
-    // Load existing skills
-    if (typeof existingSkills !== 'undefined' && existingSkills.length > 0) {
-        skillList = existingSkills;
-        displaySkills();
-    }
-    
-    // Load existing references
-    if (typeof existingReferences !== 'undefined' && existingReferences.length > 0) {
-        referenceList = existingReferences;
-        displayReferences();
-    }
+    // Data is pre-populated via inline script in experience.php
 });
 
 // Add Education
 function addEducation() {
-    const degree = document.querySelector('input[name="degree"]').value;
-    const school = document.querySelector('input[name="school"]').value;
+    const degree = document.querySelector('input[name="degree"]').value.trim();
+    const school = document.querySelector('input[name="school"]').value.trim();
     const startYear = document.querySelector('input[name="school_start_year"]').value;
     const endYear = document.querySelector('input[name="school_end_year"]').value;
     
-    if (degree && school && startYear && endYear) {
-        educationList.push({
-            degree: degree,
-            school: school,
-            start_year: startYear,
-            end_year: endYear
-        });
-        
-        // Display in list
-        displayEducation();
-        
-        // Clear inputs
-        document.querySelector('input[name="degree"]').value = '';
-        document.querySelector('input[name="school"]').value = '';
-        document.querySelector('input[name="school_start_year"]').value = '';
-        document.querySelector('input[name="school_end_year"]').value = '';
-    } else {
+    if (!degree || !school || !startYear || !endYear) {
         alert('Please fill in all education fields');
+        return;
     }
+    
+    // Validate dates
+    if (new Date(startYear) > new Date(endYear)) {
+        alert('Start date cannot be after end date');
+        return;
+    }
+    
+    educationList.push({
+        degree: degree,
+        school: school,
+        start_year: startYear,
+        end_year: endYear
+    });
+    
+    // Display in list
+    displayEducation();
+    
+    // Clear inputs
+    document.querySelector('input[name="degree"]').value = '';
+    document.querySelector('input[name="school"]').value = '';
+    document.querySelector('input[name="school_start_year"]').value = '';
+    document.querySelector('input[name="school_end_year"]').value = '';
 }
 
 function displayEducation() {
@@ -179,8 +59,8 @@ function displayEducation() {
         const endDate = new Date(edu.end_year);
         listDiv.innerHTML += `
             <div class="list-item">
-                <strong>${edu.degree}</strong><br>
-                ${edu.school}<br>
+                <strong>${escapeHtml(edu.degree)}</strong><br>
+                ${escapeHtml(edu.school)}<br>
                 ${startDate.toLocaleDateString('en-US', {month: 'short', year: 'numeric'})} - 
                 ${endDate.toLocaleDateString('en-US', {month: 'short', year: 'numeric'})}
                 <button type="button" onclick="removeEducation(${index})">Remove</button>
@@ -196,16 +76,27 @@ function removeEducation(index) {
 
 // Add Work Experience
 function addExperience() {
-    const company = document.querySelector('input[name="company"]').value;
-    const position = document.querySelector('input[name="position"]').value;
+    const company = document.querySelector('input[name="company"]').value.trim();
+    const position = document.querySelector('input[name="position"]').value.trim();
     const startYear = document.querySelector('input[name="work_start_year"]').value;
     const endYear = document.querySelector('input[name="work_end_year"]').value;
     
-    if (company || position || startYear || endYear) {
+    // Check if any field has value
+    const hasAnyValue = company || position || startYear || endYear;
+    
+    if (hasAnyValue) {
+        // If any field has value, all must have value
         if (!company || !position || !startYear || !endYear) {
             alert('Please fill in all work experience fields or leave all empty');
             return;
         }
+        
+        // Validate dates
+        if (new Date(startYear) > new Date(endYear)) {
+            alert('Start date cannot be after end date');
+            return;
+        }
+        
         experienceList.push({
             company: company,
             position: position,
@@ -238,8 +129,8 @@ function displayExperience() {
         const endDate = new Date(exp.end_year);
         listDiv.innerHTML += `
             <div class="list-item">
-                <strong>${exp.position}</strong><br>
-                ${exp.company}<br>
+                <strong>${escapeHtml(exp.position)}</strong><br>
+                ${escapeHtml(exp.company)}<br>
                 ${startDate.toLocaleDateString('en-US', {month: 'short', year: 'numeric'})} - 
                 ${endDate.toLocaleDateString('en-US', {month: 'short', year: 'numeric'})}
                 <button type="button" onclick="removeExperience(${index})">Remove</button>
@@ -255,17 +146,24 @@ function removeExperience(index) {
 
 // Add Skill
 function addSkill() {
-    const skill = document.querySelector('input[name="skill"]').value;
+    const skill = document.querySelector('input[name="skill"]').value.trim();
     
-    if (skill) {
-        skillList.push(skill);
-        displaySkills();
-        
-        // Clear input
-        document.querySelector('input[name="skill"]').value = '';
-    } else {
+    if (!skill) {
         alert('Please enter a skill');
+        return;
     }
+    
+    // Check for duplicates
+    if (skillList.includes(skill)) {
+        alert('This skill has already been added');
+        return;
+    }
+    
+    skillList.push(skill);
+    displaySkills();
+    
+    // Clear input
+    document.querySelector('input[name="skill"]').value = '';
 }
 
 function displaySkills() {
@@ -281,7 +179,7 @@ function displaySkills() {
     skillList.forEach((skill, index) => {
         listDiv.innerHTML += `
             <div class="list-item">
-                ${skill}
+                ${escapeHtml(skill)}
                 <button type="button" onclick="removeSkill(${index})">Remove</button>
             </div>
         `;
@@ -295,17 +193,23 @@ function removeSkill(index) {
 
 // Add Reference
 function addReference() {
-    const reference = document.querySelector('input[name="reference"]').value;
+    const reference = document.querySelector('input[name="reference"]').value.trim();
+    const contact = document.querySelector('input[name="reference_contact"]').value.trim();
     
-    if (reference) {
-        referenceList.push(reference);
-        displayReferences();
-        
-        // Clear input
-        document.querySelector('input[name="reference"]').value = '';
-    } else {
-        alert('Please enter a reference');
+    if (!reference) {
+        alert('Please enter a reference name');
+        return;
     }
+    
+    referenceList.push({
+        name: reference,
+        contact: contact
+    });
+    displayReferences();
+    
+    // Clear inputs
+    document.querySelector('input[name="reference"]').value = '';
+    document.querySelector('input[name="reference_contact"]').value = '';
 }
 
 function displayReferences() {
@@ -319,9 +223,10 @@ function displayReferences() {
     listDiv.innerHTML = '<h3>Added References:</h3>';
     
     referenceList.forEach((ref, index) => {
+        const contactDisplay = ref.contact && ref.contact.trim() ? `<br><em>${escapeHtml(ref.contact)}</em>` : '';
         listDiv.innerHTML += `
             <div class="list-item">
-                ${ref}
+                <strong>${escapeHtml(ref.name)}</strong>${contactDisplay}
                 <button type="button" onclick="removeReference(${index})">Remove</button>
             </div>
         `;
@@ -337,6 +242,11 @@ function removeReference(index) {
 function validateAndNext() {
     if (educationList.length === 0) {
         alert('Please add at least one education entry');
+        return false;
+    }
+    
+    if (skillList.length === 0) {
+        alert('Please add at least one skill');
         return false;
     }
     
@@ -375,7 +285,8 @@ function validateAndNext() {
     
     // Add references data
     referenceList.forEach((ref, index) => {
-        appendHiddenInput(form, `references[${index}]`, ref);
+        appendHiddenInput(form, `references[${index}][name]`, ref.name);
+        appendHiddenInput(form, `references[${index}][contact]`, ref.contact);
     });
     
     form.submit();
@@ -387,4 +298,11 @@ function appendHiddenInput(form, name, value) {
     input.name = name;
     input.value = value;
     form.appendChild(input);
+}
+
+// Helper function to escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }

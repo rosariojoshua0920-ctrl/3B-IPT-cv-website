@@ -16,6 +16,10 @@ if ($isEdit) {
     }
     
     $_SESSION['personal_id'] = $personal_id;
+} else {
+    // IMPORTANT: Clear session for new CV
+    session_destroy();
+    session_start();
 }
 
 ?>
