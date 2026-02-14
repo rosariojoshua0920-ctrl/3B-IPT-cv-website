@@ -11,9 +11,9 @@
 </head>
 <body>
 
-        <div class="header">
+        <!-- <div class="header">
             <h1>Student CV Generator</h1>
-        </div>
+        </div> -->
         <div class="main-container">
             <div class="create-box">
                 <h2><strong>Welcome to the Student CV Generator</strong></h2>
