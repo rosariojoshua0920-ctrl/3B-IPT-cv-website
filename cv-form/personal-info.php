@@ -111,7 +111,7 @@ if ($isEdit) {
 
                 <!-- Form Actions -->
                 <div class="form-actions">
-                    <button type="button" onclick="window.location.href='../main/main-page.php'">Cancel</button>
+                    <button type="button" onclick="window.location.href='../layout-main-page/nav-bar-main.php'">Cancel</button>
                     <button type="submit"><?php echo $isEdit ? 'Update & Next' : 'Next'; ?></button>
                 </div>
             </form>

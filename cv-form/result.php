@@ -130,14 +130,14 @@ $references_query = mysqli_query($conn,
                     </div>
                     <div class="cv-contact">
                         <?php if (!empty($personal['phone'])): ?>
-                            <span>📞 <?php echo htmlspecialchars($personal['phone']); ?></span>
+                            <span><?php echo htmlspecialchars($personal['phone']); ?></span>
                         <?php endif; ?>
                         <?php if (!empty($personal['email'])): ?>
-                            <span>📧 <?php echo htmlspecialchars($personal['email']); ?></span>
+                            <span> <?php echo htmlspecialchars($personal['email']); ?></span>
                         <?php endif; ?>
                         <br>
                         <?php if (!empty($personal['address'])): ?>
-                            <span>📍 <?php echo htmlspecialchars($personal['address']); ?></span>
+                            <span><?php echo htmlspecialchars($personal['address']); ?></span>
                         <?php endif; ?>
                     </div>
                 </div>
