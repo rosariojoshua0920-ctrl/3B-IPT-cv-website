@@ -10,11 +10,8 @@
     <header class="site-header">
         <h1 class="brand">Student CV Generator</h1>
         <nav class="site-nav">
-            <button class="nav-btn" onclick="loadContent('../main/main-page.php')" aria-label="Home Page">
-                <span>Home</span>
-            </button>
-            <button class="nav-btn" onclick="loadContent('../view-cv/view-cv.php')" aria-label="View CV">
-                <span>View CV</span>
+            <button class="nav-btn" onclick="window.location.href='../view-cv/view-cv.php'" aria-label="View CV">
+               View CV
             </button>
         </nav>
     </header>

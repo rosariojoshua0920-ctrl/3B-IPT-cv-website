@@ -1,10 +1,9 @@
 <?php
-session_start();
-include "../cv-form/db.php";
-
-// Handle delete
+session_start(); // Start session to manage CV state
+require_once '../cv-form/db.php'; // Include database connection
+// Handle delete action
 if (isset($_GET['delete']) && isset($_GET['id'])) {
-    $id = intval($_GET['id']); // Convert to integer for safety
+    $id = intval($_GET['id']);
     
     // Delete from all related tables
     mysqli_query($conn, "DELETE FROM education WHERE personal_info_id = $id");
@@ -20,18 +19,23 @@ if (isset($_GET['delete']) && isset($_GET['id'])) {
     }
     exit;
 }
-
-// Search functionality
+// Handle search functionality
 $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
-
 if ($search) {
     $query = "SELECT * FROM personal_info WHERE first_name LIKE '%$search%' OR last_name LIKE '%$search%' OR email LIKE '%$search%' ORDER BY created_at DESC";
 } else {
     $query = "SELECT * FROM personal_info ORDER BY created_at DESC";
 }
-
 $result = mysqli_query($conn, $query);
+$total_cvs = mysqli_num_rows($result);
+
+
+
+
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,78 +43,67 @@ $result = mysqli_query($conn, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View CVs</title>
+    <link rel="stylesheet" href="../view-cv/view-cv.css">
 </head>
 <body>
-    <h1>My CVs</h1>
-    
-    
-    
-    <?php if (isset($_GET['error'])): ?>
-        <div style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 15px;">
-            ✗ Error deleting CV. <?php if (isset($_GET['msg'])) echo htmlspecialchars(urldecode($_GET['msg'])); ?>
+    <div class="page-wrapper">
+        <div class="card">
+            <h1>Curriculum Vitae</h1>
+            
+            <div class="top-actions">
+                <a href="../layout-main-page/nav-bar-main.php" class="back-link">← Back to Home</a>
+                
+                <!-- Search Form -->
+                <form method="GET" action="/cv_website/view-cv/view-cv.php" class="search-form">
+                   <input type="text" name="search" placeholder="Search by name or email..." value="<?php echo htmlspecialchars($search); ?>">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            
+            <!-- CVs Table -->
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Created Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if ($total_cvs > 0): ?>
+                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($row['first_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['last_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['phone']); ?></td>
+                                    <td><?php echo date("Y-m-d", strtotime($row['created_at'])); ?></td>
+                                    <td class="actions">
+                                        <div class="action-links">
+                                            <a href="../cv-form/result.php?id=<?php echo $row['id']; ?>">View</a>
+                                            <a href="../cv-form/personal-info.php?id=<?php echo $row['id']; ?>">Edit</a>
+                                            <a href="/cv_website/view-cv/view-cv.php?delete=1&id=<?php echo $row['id']; ?>" class="delete-link" onclick="return confirm('Are you sure you want to delete this CV?');">Delete</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7" class="no-records">No CVs found. Start by creating a new one!</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+
+                </table>
+            </div>
+            
+            <a href="../cv-form/personal-info.php" class="create-new">+ Create New CV</a>
         </div>
-    <?php endif; ?>
-    
-    <a href="../layout-main-page/nav-bar-main.php">← Back to Home</a>
-    <br><br>
-    
-    <!-- Search Form -->
-    <form method="GET" action="view-cv.php">
-        <input type="text" name="search" placeholder="Search by name or email..." value="<?php echo htmlspecialchars($search); ?>">
-        <button type="submit">Search</button>
-        <?php if ($search): ?>
-            <a href="view-cv.php">Clear Search</a>
-        <?php endif; ?>
-    </form>
-    
-    <br><br>
-    
-    <!-- CVs Table -->
-    <table border="1" cellpadding="10" cellspacing="0" style="width: 100%;">
-        <thead>
-            <tr style="background-color: #f0f0f0;">
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Created Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $id = $row['id'];
-                    $first_name = htmlspecialchars($row['first_name']);
-                    $last_name = htmlspecialchars($row['last_name']);
-                    $email = htmlspecialchars($row['email']);
-                    $phone = htmlspecialchars($row['phone']);
-                    $created = isset($row['created_at']) ? date('M d, Y', strtotime($row['created_at'])) : 'N/A';
-            ?>
-            <tr>
-                <td><?php echo $first_name; ?></td>
-                <td><?php echo $last_name; ?></td>
-                <td><?php echo $email; ?></td>
-                <td><?php echo $phone; ?></td>
-                <td><?php echo $created; ?></td>
-                <td>
-                    <a href="../cv-form/result.php?id=<?php echo $id; ?>">View</a> |
-                    <a href="../cv-form/personal-info.php?id=<?php echo $id; ?>">Edit</a> |
-                    <a href="view-cv.php?delete=1&id=<?php echo $id; ?>" onclick="return confirm('Are you sure you want to delete this CV?');">Delete</a>
-                </td>
-            </tr>
-            <?php 
-                }
-            } else {
-                echo '<tr><td colspan="6" style="text-align: center;">No CVs found. <a href="../cv-form/personal-info.php">Create one now</a></td></tr>';
-            }
-            ?>
-        </tbody>
-    </table>
-    
-    <br>
-    <a href="../cv-form/personal-info.php">+ Create New CV</a>
+    </div>
 
 </body>
 </html>
