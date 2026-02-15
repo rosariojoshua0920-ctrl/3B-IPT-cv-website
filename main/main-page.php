@@ -11,9 +11,14 @@
 </head>
 <body>
 
-        <!-- <div class="header">
-            <h1>Student CV Generator</h1>
-        </div> -->
+        <div class="header">
+            
+            <div class="image-strip">
+                <h1>Happy Valentines   </h1>
+                <div class="img-box" style="background-image: url('../icons/flower-1.png');"></div>
+            </div>
+
+            </div>
         <div class="main-container">
             <div class="create-box">
                 <h2><strong>Welcome to the Student CV Generator</strong></h2>

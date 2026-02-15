@@ -221,7 +221,7 @@ while ($row = mysqli_fetch_assoc($ref_result)) {
     </div>
     <div class="btn-center">
         <button type="button" class="back" onclick="history.back()">← Back</button>
-        <button type="button" class="next" onclick="validateAndNext()">Next</button>
+        <button type="button" class="next" onclick="validateAndNext()">Submit</button>
     </div>
         </div>
     </div>

@@ -129,7 +129,9 @@ $references_query = mysqli_query($conn,
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Preview - <?php echo htmlspecialchars($personal['first_name'] . ' ' . $personal['last_name']); ?></title>
-    <link rel="stylesheet" href="../cv-form/result.css"></body>
+    <link rel="stylesheet" href="../cv-form/result.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -147,7 +149,14 @@ $references_query = mysqli_query($conn,
             </svg> -->
             Print CV
         </button>
-        
+        <button onclick="downloadPDF()" class="btn btn-download">
+            <!-- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg> -->
+            Download PDF
+        </button>
         <button onclick="window.location.href='personal-info.php?id=<?php echo $personal_id; ?>'" class="btn btn-edit">
             <!-- <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -316,7 +325,49 @@ $references_query = mysqli_query($conn,
     </div>
 </div>
 
-
+<script>
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const element = document.querySelector('.cv-container');
+        const fileName = '<?php echo htmlspecialchars($personal['first_name'] . '_' . $personal['last_name']); ?>_CV.pdf';
+        
+        html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            windowHeight: element.scrollHeight
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
+            
+            const imgWidth = 210;
+            const pageHeight = 297;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+            
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+            
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+            
+            pdf.save(fileName);
+        }).catch(error => {
+            console.error('Error generating PDF:', error);
+            alert('Error generating PDF. Please try again.');
+        });
+    }
+</script>
 
 </body>
+</html></body>
 </html>
